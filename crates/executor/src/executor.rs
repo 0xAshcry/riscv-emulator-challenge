@@ -1,4 +1,3 @@
-//tuneup
 use std::{
     fs::File,
     io::{BufWriter, Write},
@@ -611,38 +610,17 @@ impl<'a> Executor<'a> {
 
     /// Execute the given instruction over the current state of the runtime.
     #[allow(clippy::too_many_lines)]
-
-    pub fn execute_instruction(&mut self, instruction: &Instruction) -> Result<(), ExecutionError> {
+    fn execute_instruction(&mut self, instruction: &Instruction) -> Result<(), ExecutionError> {
         let mut next_pc = self.state.pc.wrapping_add(4);
 
-        let lookup_id = if self.executor_mode == ExecutorMode::Trace {
-            create_alu_lookup_id()
-        } else {
-            LookupId::default()
-        };
+        let rd: Register;
+        let (a, b, c): (u32, u32, u32);
+        let (addr, memory_read_value): (u32, u32);
 
-        let syscall_lookup_id = if self.executor_mode == ExecutorMode::Trace {
-            create_alu_lookup_id()
-        } else {
-            LookupId::default()
-        };
-
-        // Gunakan table lookup untuk mempercepat eksekusi ALU
-        if let Some(alu_fn) = ALU_OPS.get(instruction.opcode as usize) {
-            let (rd, b, c, a) = alu_fn(self, instruction);
-            
-            // Gunakan unsafe untuk mempercepat akses register & memory
-            unsafe {
-                let _rd_val = *self.state.registers.get_unchecked(rd as usize);
-                let _addr_val = *self.state.memory.get_unchecked(a as usize);
-            }
-
-            self.alu_rw(instruction, rd, a, b, c, lookup_id);
+        if self.executor_mode == ExecutorMode::Trace {
+            // self.memory_accesses = MemoryAccessRecord::default();
         }
-
-        Ok(())
-    }
-            let lookup_id = if self.executor_mode == ExecutorMode::Trace {
+        let lookup_id = if self.executor_mode == ExecutorMode::Trace {
             create_alu_lookup_id()
         } else {
             LookupId::default()
