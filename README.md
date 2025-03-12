@@ -20,24 +20,3 @@ Time ─────────────────────────
                                  ───────▶[GPU 4: Shard 4 Proof]────────▶
                                            ───────▶[GPU 5: Shard 5 Proof]────────▶
 ```
-
-Succinct is seeking for new approaches to this problem and outstanding engineers to work on it. If you have a solution, please email riscv-emulator-challenge@succinct.xyz with a link to your GitHub repository or zip file.
-
-## Task
-
-We’ve created a basic starter RISC-V emulator in Rust [here](https://github.com/succinctlabs/riscv-emulator-challenge) alongside a basic benchmarking script. Your task is to optimize the performance of this implementation on the `rsp` program and maximize the `Average MHz` statistic.
-
-To benchmark the performance, run the following command:
-
-```
-cd benchmark
-cargo run —-release 
-```
-
-Start by exploring the `crates/executor` crate to understand its current implementation and identify performance bottlenecks. Focus on improving the existing implementation while ensuring that any modifications are benchmarked for performance improvements and correctness.
-
-Note that performance varies based on the hardware being utilized. Submissions will be judged using a m7i.8xlarge instance on AWS. With the existing implementation, the average MHz is around 9.35.
-
-## Leaderboard
-
-Submissions will be continuously evaluated and a leaderboard will be maintained.
